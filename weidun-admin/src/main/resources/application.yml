@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: weidun-admin
+  profiles:
+    active: dev # 默认开发环境
+
+
+secure:
+  ignored:
+    urls: # 安全路径白名单
+      - /swagger-ui.html

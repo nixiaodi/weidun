@@ -3,7 +3,8 @@ spring:
     name: weidun-admin
   profiles:
     active: dev # 默认开发环境
-
+  redis:
+    port:
 
 secure:
   ignored:

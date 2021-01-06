@@ -1,0 +1,40 @@
+package org.jiang;
+
+import lombok.extern.slf4j.Slf4j;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.internal.DefaultShellCallback;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @Description TODO
+ * @Author jiang
+ * @Create 2021/1/5
+ * @Version 1.0
+ */
+@Slf4j
+public class Generator {
+    public static void main(String[] args) throws Exception{
+        // MBG执行过程中的警告信息
+        List<String> warnings = new ArrayList<>();
+        // 当生成代码重复时，覆盖原代码
+        boolean overwrite = true;
+        // 读取配置文件
+        InputStream is = Generator.class.getResourceAsStream("/generatorConfig.xml");
+        ConfigurationParser cp = new ConfigurationParser(warnings);
+        Configuration config = cp.parseConfiguration(is);
+        is.close();
+
+        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        // 创建 MBG
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+        // 执行生成器
+        myBatisGenerator.generate(null);
+        // 输出警告信息
+        warnings.forEach(log::info);
+    }
+}

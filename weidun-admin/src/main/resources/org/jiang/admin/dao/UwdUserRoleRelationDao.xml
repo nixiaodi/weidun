@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.jiang.admin.dao.UwdUserRoleRelationDao">
+    <!--批量新增回写主键支持-->
+    <insert id="insertList">
+        insert into uwd_user_role_relation (user_id, role_id) values
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <select id="getRoleList" resultMap="org.jiang.mapper.UwdMenuMapper.BaseResultMap">
+        select r.*
+        from uwd_user_role_relation urr left join uwd_role r on urr.role_id = r.id
+        where urr.user_id = #{userId}
+    </select>
+    <select id="getResourceList" resultType="org.jiang.model.UwdResource">
+        select
+            r2.id id,
+            r2.create_time createTime,
+            r2.name name,
+            r2.description description,
+            r2.category_id categoryId
+        from
+            uwd_user_role_relation urr
+        left join uwd_role r on urr.role_id = r.id
+        left join uwd_role_resource_relation rrr on r.id = rrr.role_id
+        left join uwd_resource r2 on r2.id = rrr.resource_id
+        where
+            urr.user_id = #{userId}
+        and r2.id is not null
+        group by r2.id
+    </select>
+    <select id="getUserIdList" resultType="java.lang.Long">
+        select
+            distinct urr.user_id
+        from
+            uwd_role_resource_relation rrr
+                left join uwd_user_role_relation urr on rrr.role_id = urr.role_id
+        where rrr.resource_id = #{resourceId}
+    </select>
+</mapper>

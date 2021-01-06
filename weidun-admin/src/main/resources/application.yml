@@ -3,8 +3,23 @@ spring:
     name: weidun-admin
   profiles:
     active: dev # 默认开发环境
-  redis:
-    port:
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:org/**/mapper/*.xml
+
+redis:
+  database: weidun
+  key:
+    admin: 'uwd:admin'
+    resourceList: 'uwd:resourceList'
+  expire:
+    common: 86400 # 24小时
 
 secure:
   ignored:
@@ -16,3 +31,16 @@ jwt:
   secret: weidun-admin-secret #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24*7)
   tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+aliyun:
+  oss:
+    endpoint: oss-cn-chengdu.aliyuncs.com
+    accessKeyId: LTAI4Fyozv7v34gpttovBvPV
+    accessKeySecret: 8uKHiJvWi5W0hrpEUQfe1MMTDlvohN
+    bucketName: wei-dun
+    policy:
+      expire: 300 # 签名有效期(s)
+    maxSize: 10 # 上传文件大小(m)
+    callback: http
+    dir:
+      prefix: weidun/images/ # 文件上传路径前缀

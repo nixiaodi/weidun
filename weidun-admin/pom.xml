@@ -19,6 +19,10 @@
             <artifactId>weidun-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jiang</groupId>
+            <artifactId>weidun-mbg</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>

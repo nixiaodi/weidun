@@ -20,7 +20,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
     private boolean addRemarkComments = false;
     private static final String EXAMPLE_SUFFIX = "Example";
     private static final String MAPPER_SUFFIX = "Mapper";
-    private static final String API_MODEL_FULL_CLASS_NAME = "io.swagger.annotations.ApiModelProperty";
+    private static final String API_MODEL_PROPERTY_FULL_CLASS_NAME = "io.swagger.annotations.ApiModelProperty";
 
     /**
      * 设置用户配置的参数
@@ -37,23 +37,23 @@ public class CommentGenerator extends DefaultCommentGenerator {
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         String remarks = introspectedColumn.getRemarks();
-        // 根据参数和备注信息判断是否添加备注信息
-        if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
-            // 数据库特殊字符转义
-            if (remarks.contains("\"")) {
+        //根据参数和备注信息判断是否添加备注信息
+        if(addRemarkComments&&StringUtility.stringHasValue(remarks)){
+            //数据库中特殊字符需要转义
+            if(remarks.contains("\"")){
                 remarks = remarks.replace("\"","'");
             }
-            // 向model中的字段添加swagger注解
-            field.addJavaDocLine("@ApiModelProperty(value = \"" + remarks + "\")");
+            //给model的字段添加swagger注解
+            field.addJavaDocLine("@ApiModelProperty(value = \""+remarks+"\")");
         }
     }
 
     @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         super.addJavaFileComment(compilationUnit);
-        // 只在model中添加swagger注解类的导入
-        if (!compilationUnit.getType().getFullyQualifiedName().contains(MAPPER_SUFFIX) && !compilationUnit.getType().getFullyQualifiedName().contains(EXAMPLE_SUFFIX)) {
-            compilationUnit.addImportedType(new FullyQualifiedJavaType(API_MODEL_FULL_CLASS_NAME));
+        //只在model中添加swagger注解类的导入
+        if(!compilationUnit.getType().getFullyQualifiedName().contains(MAPPER_SUFFIX)&&!compilationUnit.getType().getFullyQualifiedName().contains(EXAMPLE_SUFFIX)){
+            compilationUnit.addImportedType(new FullyQualifiedJavaType(API_MODEL_PROPERTY_FULL_CLASS_NAME));
         }
     }
 }

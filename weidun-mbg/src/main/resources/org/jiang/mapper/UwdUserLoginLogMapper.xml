@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jiang.mapper.UwdMenuMapper">
-  <resultMap id="BaseResultMap" type="org.jiang.model.UwdMenu">
+<mapper namespace="org.jiang.mapper.UwdUserLoginLogMapper">
+  <resultMap id="BaseResultMap" type="org.jiang.model.UwdUserLoginLog">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="admin_id" jdbcType="BIGINT" property="adminId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="hidden" jdbcType="INTEGER" property="hidden" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, create_time, title, level, sort, name, icon, hidden
+    id, admin_id, create_time, ip, address, user_agent
   </sql>
-  <select id="selectByExample" parameterType="org.jiang.model.UwdMenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.jiang.model.UwdUserLoginLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from uwd_menu
+    from uwd_user_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,123 +87,94 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from uwd_menu
+    from uwd_user_login_log
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from uwd_menu
+    delete from uwd_user_login_log
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.jiang.model.UwdMenuExample">
-    delete from uwd_menu
+  <delete id="deleteByExample" parameterType="org.jiang.model.UwdUserLoginLogExample">
+    delete from uwd_user_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.jiang.model.UwdMenu">
+  <insert id="insert" parameterType="org.jiang.model.UwdUserLoginLog">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into uwd_menu (parent_id, create_time, title, 
-      level, sort, name, 
-      icon, hidden)
-    values (#{parentId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=INTEGER})
+    insert into uwd_user_login_log (admin_id, create_time, ip, 
+      address, user_agent)
+    values (#{adminId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.jiang.model.UwdMenu">
+  <insert id="insertSelective" parameterType="org.jiang.model.UwdUserLoginLog">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into uwd_menu
+    insert into uwd_user_login_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="parentId != null">
-        parent_id,
+      <if test="adminId != null">
+        admin_id,
       </if>
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="title != null">
-        title,
+      <if test="ip != null">
+        ip,
       </if>
-      <if test="level != null">
-        level,
+      <if test="address != null">
+        address,
       </if>
-      <if test="sort != null">
-        sort,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="icon != null">
-        icon,
-      </if>
-      <if test="hidden != null">
-        hidden,
+      <if test="userAgent != null">
+        user_agent,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="parentId != null">
-        #{parentId,jdbcType=BIGINT},
+      <if test="adminId != null">
+        #{adminId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
       </if>
-      <if test="level != null">
-        #{level,jdbcType=INTEGER},
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="hidden != null">
-        #{hidden,jdbcType=INTEGER},
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.jiang.model.UwdMenuExample" resultType="java.lang.Long">
-    select count(*) from uwd_menu
+  <select id="countByExample" parameterType="org.jiang.model.UwdUserLoginLogExample" resultType="java.lang.Long">
+    select count(*) from uwd_user_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update uwd_menu
+    update uwd_user_login_log
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.parentId != null">
-        parent_id = #{record.parentId,jdbcType=BIGINT},
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=BIGINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARCHAR},
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
       </if>
-      <if test="record.level != null">
-        level = #{record.level,jdbcType=INTEGER},
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="record.sort != null">
-        sort = #{record.sort,jdbcType=INTEGER},
-      </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.icon != null">
-        icon = #{record.icon,jdbcType=VARCHAR},
-      </if>
-      <if test="record.hidden != null">
-        hidden = #{record.hidden,jdbcType=INTEGER},
+      <if test="record.userAgent != null">
+        user_agent = #{record.userAgent,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -214,60 +182,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update uwd_menu
+    update uwd_user_login_log
     set id = #{record.id,jdbcType=BIGINT},
-      parent_id = #{record.parentId,jdbcType=BIGINT},
+      admin_id = #{record.adminId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      title = #{record.title,jdbcType=VARCHAR},
-      level = #{record.level,jdbcType=INTEGER},
-      sort = #{record.sort,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      icon = #{record.icon,jdbcType=VARCHAR},
-      hidden = #{record.hidden,jdbcType=INTEGER}
+      ip = #{record.ip,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      user_agent = #{record.userAgent,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.jiang.model.UwdMenu">
-    update uwd_menu
+  <update id="updateByPrimaryKeySelective" parameterType="org.jiang.model.UwdUserLoginLog">
+    update uwd_user_login_log
     <set>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=BIGINT},
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
       </if>
-      <if test="level != null">
-        level = #{level,jdbcType=INTEGER},
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="hidden != null">
-        hidden = #{hidden,jdbcType=INTEGER},
+      <if test="userAgent != null">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.jiang.model.UwdMenu">
-    update uwd_menu
-    set parent_id = #{parentId,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="org.jiang.model.UwdUserLoginLog">
+    update uwd_user_login_log
+    set admin_id = #{adminId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      title = #{title,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      icon = #{icon,jdbcType=VARCHAR},
-      hidden = #{hidden,jdbcType=INTEGER}
+      ip = #{ip,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

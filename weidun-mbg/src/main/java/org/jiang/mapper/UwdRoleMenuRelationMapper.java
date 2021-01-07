@@ -10,7 +10,7 @@ public interface UwdRoleMenuRelationMapper {
 
     int deleteByExample(UwdRoleMenuRelationExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(UwdRoleMenuRelation record);
 
@@ -18,7 +18,7 @@ public interface UwdRoleMenuRelationMapper {
 
     List<UwdRoleMenuRelation> selectByExample(UwdRoleMenuRelationExample example);
 
-    UwdRoleMenuRelation selectByPrimaryKey(Integer id);
+    UwdRoleMenuRelation selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") UwdRoleMenuRelation record, @Param("example") UwdRoleMenuRelationExample example);
 

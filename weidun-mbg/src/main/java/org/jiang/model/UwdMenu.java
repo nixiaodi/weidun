@@ -7,23 +7,23 @@ import java.util.Date;
 public class UwdMenu implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "父级id")
+    @ApiModelProperty(value = "父级ID")
     private Long parentId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "资源名称")
+    @ApiModelProperty(value = "菜单名称")
+    private String title;
+
+    @ApiModelProperty(value = "菜单级数")
+    private Integer level;
+
+    @ApiModelProperty(value = "菜单排序")
+    private Integer sort;
+
+    @ApiModelProperty(value = "前端名称")
     private String name;
-
-    @ApiModelProperty(value = "资源路径 ")
-    private String url;
-
-    @ApiModelProperty(value = "资源组件")
-    private String component;
-
-    @ApiModelProperty(value = "资源路径")
-    private String path;
 
     @ApiModelProperty(value = "前端图标")
     private String icon;
@@ -57,36 +57,36 @@ public class UwdMenu implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getIcon() {
@@ -114,10 +114,10 @@ public class UwdMenu implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", parentId=").append(parentId);
         sb.append(", createTime=").append(createTime);
+        sb.append(", title=").append(title);
+        sb.append(", level=").append(level);
+        sb.append(", sort=").append(sort);
         sb.append(", name=").append(name);
-        sb.append(", url=").append(url);
-        sb.append(", component=").append(component);
-        sb.append(", path=").append(path);
         sb.append(", icon=").append(icon);
         sb.append(", hidden=").append(hidden);
         sb.append(", serialVersionUID=").append(serialVersionUID);

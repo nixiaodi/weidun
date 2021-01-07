@@ -1,9 +1,12 @@
 package org.jiang.admin.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.PageHelper;
 import org.jiang.admin.service.UwdResourceService;
 import org.jiang.admin.service.UwdUserCacheService;
 import org.jiang.mapper.UwdResourceMapper;
 import org.jiang.model.UwdResource;
+import org.jiang.model.UwdResourceExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,11 +53,23 @@ public class UwdResourceServiceImpl implements UwdResourceService {
 
     @Override
     public List<UwdResource> list(Long categoryId, String nameKeyword, String urlKeyword, Integer pageSize, Integer pageNum) {
-        return null;
+        PageHelper.startPage(pageNum,pageSize);
+        UwdResourceExample example = new UwdResourceExample();
+        UwdResourceExample.Criteria criteria = example.createCriteria();
+        if (categoryId != null) {
+            criteria.andCategoryIdEqualTo(categoryId);
+        }
+        if (StrUtil.isNotEmpty(nameKeyword)) {
+            criteria.andNameLike("%" + nameKeyword + "%");
+        }
+        if(StrUtil.isNotEmpty(urlKeyword)){
+            criteria.andUrlLike('%'+urlKeyword+'%');
+        }
+        return uwdResourceMapper.selectByExample(example);
     }
 
     @Override
     public List<UwdResource> listAll() {
-        return null;
+        return uwdResourceMapper.selectByExample(new UwdResourceExample());
     }
 }

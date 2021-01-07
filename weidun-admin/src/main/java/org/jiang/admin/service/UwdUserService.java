@@ -1,6 +1,7 @@
 package org.jiang.admin.service;
 
 import org.jiang.admin.dto.UpdateAdminPasswordParam;
+import org.jiang.admin.dto.UwdUserParam;
 import org.jiang.model.UwdResource;
 import org.jiang.model.UwdRole;
 import org.jiang.model.UwdUser;
@@ -24,7 +25,7 @@ public interface UwdUserService {
     /**
      * 用户注册
      */
-    UwdUser register(UwdUser UwdUser);
+    UwdUser register(UwdUserParam uwdUserParam);
 
     /**
      * 用户登录

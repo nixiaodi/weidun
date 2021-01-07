@@ -4,36 +4,38 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class UwdRoleMenuRelation implements Serializable {
-    private Integer id;
+    private Long id;
 
-    private Integer mid;
+    @ApiModelProperty(value = "角色ID")
+    private Long roleId;
 
-    private Integer rid;
+    @ApiModelProperty(value = "菜单ID")
+    private Long menuId;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMid() {
-        return mid;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setMid(Integer mid) {
-        this.mid = mid;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
-    public Integer getRid() {
-        return rid;
+    public Long getMenuId() {
+        return menuId;
     }
 
-    public void setRid(Integer rid) {
-        this.rid = rid;
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     @Override
@@ -43,8 +45,8 @@ public class UwdRoleMenuRelation implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", mid=").append(mid);
-        sb.append(", rid=").append(rid);
+        sb.append(", roleId=").append(roleId);
+        sb.append(", menuId=").append(menuId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

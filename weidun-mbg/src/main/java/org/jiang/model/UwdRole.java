@@ -13,6 +13,9 @@ public class UwdRole implements Serializable {
     @ApiModelProperty(value = "描述")
     private String description;
 
+    @ApiModelProperty(value = "后台用户数量")
+    private Integer userCount;
+
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
@@ -45,6 +48,14 @@ public class UwdRole implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getUserCount() {
+        return userCount;
+    }
+
+    public void setUserCount(Integer userCount) {
+        this.userCount = userCount;
     }
 
     public Date getCreateTime() {
@@ -80,6 +91,7 @@ public class UwdRole implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", description=").append(description);
+        sb.append(", userCount=").append(userCount);
         sb.append(", createTime=").append(createTime);
         sb.append(", status=").append(status);
         sb.append(", sort=").append(sort);

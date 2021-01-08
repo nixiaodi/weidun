@@ -1,5 +1,6 @@
 package org.jiang.admin.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.jiang.model.UwdResource;
 import org.jiang.model.UwdRole;

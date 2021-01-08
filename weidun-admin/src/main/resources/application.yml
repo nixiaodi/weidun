@@ -10,8 +10,8 @@ spring:
 
 mybatis:
   mapper-locations:
-    - classpath:dao/*.xml
-    - classpath*:org/**/mapper/*.xml
+    - classpath:org/jiang/admin/dao/*.xml
+    - classpath*:org/jiang/mapper/*.xml
 
 redis:
   database: weidun

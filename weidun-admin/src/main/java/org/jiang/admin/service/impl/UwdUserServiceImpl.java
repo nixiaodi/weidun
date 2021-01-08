@@ -50,11 +50,11 @@ public class UwdUserServiceImpl implements UwdUserService {
    @Autowired
    private PasswordEncoder passwordEncoder;
    @Autowired
-   private UwdUserMapper uwdUserMapper;
+   private UwdUserMapper userMapper;
    @Autowired
-   private UwdUserRoleRelationMapper uwdUserRoleRelationMapper;
+   private UwdUserRoleRelationMapper userRoleRelationMapper;
    @Autowired
-   private UwdUserRoleRelationDao uwdUserRoleRelationDao;
+   private UwdUserRoleRelationDao userRoleRelationDao;
    @Autowired
    private UwdUserCacheService uwdUserCacheService;
    @Autowired
@@ -67,7 +67,7 @@ public class UwdUserServiceImpl implements UwdUserService {
         if (user != null) return user;
         UwdUserExample example = new UwdUserExample();
         example.createCriteria().andUsernameEqualTo(username);
-        List<UwdUser> uwdUserList = uwdUserMapper.selectByExample(example);
+        List<UwdUser> uwdUserList = userMapper.selectByExample(example);
         if (uwdUserList != null && uwdUserList.size() > 0) {
             user = uwdUserList.get(0);
             uwdUserCacheService.setUser(user);
@@ -85,14 +85,14 @@ public class UwdUserServiceImpl implements UwdUserService {
         // 查询是否存在相同用户名的用户
         UwdUserExample example = new UwdUserExample();
         example.createCriteria().andUsernameEqualTo(uwdUser.getUsername());
-        List<UwdUser> uwdUserList = uwdUserMapper.selectByExample(example);
+        List<UwdUser> uwdUserList = userMapper.selectByExample(example);
         if (uwdUserList.size() > 0) {
             return null;
         }
         // 加密密码
         String encodePassword = passwordEncoder.encode(uwdUser.getPassword());
         uwdUser.setPassword(encodePassword);
-        uwdUserMapper.insert(uwdUser);
+        userMapper.insert(uwdUser);
         return uwdUser;
     }
 
@@ -142,7 +142,7 @@ public class UwdUserServiceImpl implements UwdUserService {
 
     @Override
     public UwdUser getItem(Long id) {
-        return uwdUserMapper.selectByPrimaryKey(id);
+        return userMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -154,13 +154,13 @@ public class UwdUserServiceImpl implements UwdUserService {
             criteria.andUsernameLike("%" + keyword + "%");
             example.or(example.createCriteria().andNickNameLike("%" + keyword + "%"));
         }
-        return uwdUserMapper.selectByExample(example);
+        return userMapper.selectByExample(example);
     }
 
     @Override
     public int update(Long id, UwdUser uwdUser) {
         uwdUser.setId(id);
-        UwdUser rawUser = uwdUserMapper.selectByPrimaryKey(id);
+        UwdUser rawUser = userMapper.selectByPrimaryKey(id);
         if (rawUser.getPassword().equals(uwdUser.getPassword())) {
             // 与原加密密码相同的不需要修改
             uwdUser.setPassword(null);
@@ -172,7 +172,7 @@ public class UwdUserServiceImpl implements UwdUserService {
                 uwdUser.setPassword(passwordEncoder.encode(uwdUser.getPassword()));
             }
         }
-        int count = uwdUserMapper.updateByPrimaryKeySelective(uwdUser);
+        int count = userMapper.updateByPrimaryKeySelective(uwdUser);
         uwdUserCacheService.delUser(id);
         return count;
     }
@@ -180,7 +180,7 @@ public class UwdUserServiceImpl implements UwdUserService {
     @Override
     public int delete(Long id) {
         uwdUserCacheService.delUser(id);
-        int count = uwdUserMapper.deleteByPrimaryKey(id);
+        int count = userMapper.deleteByPrimaryKey(id);
         uwdUserCacheService.delResourceListByResource(id);
         return count;
     }
@@ -191,7 +191,7 @@ public class UwdUserServiceImpl implements UwdUserService {
         // 先删除原来的关系
         UwdUserRoleRelationExample userRoleRelationExample = new UwdUserRoleRelationExample();
         userRoleRelationExample.createCriteria().andUserIdEqualTo(uwdUserId);
-        uwdUserRoleRelationMapper.deleteByExample(userRoleRelationExample);
+        userRoleRelationMapper.deleteByExample(userRoleRelationExample);
         // 建立新关系
         if (!CollectionUtils.isEmpty(roleIds)) {
             List<UwdUserRoleRelation> list = new ArrayList<>();
@@ -201,7 +201,7 @@ public class UwdUserServiceImpl implements UwdUserService {
                 uwdUserRoleRelation.setRoleId(roleId);
                 list.add(uwdUserRoleRelation);
             }
-            uwdUserRoleRelationDao.insertList(list);
+            userRoleRelationDao.insertList(list);
         }
         uwdUserCacheService.delResourceList(uwdUserId);
         return count;
@@ -209,7 +209,7 @@ public class UwdUserServiceImpl implements UwdUserService {
 
     @Override
     public List<UwdRole> getRoleList(Long userId) {
-        return uwdUserRoleRelationDao.getRoleList(userId);
+        return userRoleRelationDao.getRoleList(userId);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class UwdUserServiceImpl implements UwdUserService {
         if (CollUtil.isNotEmpty(resourceList)) {
             return resourceList;
         }
-        resourceList = uwdUserRoleRelationDao.getResourceList(userId);
+        resourceList = userRoleRelationDao.getResourceList(userId);
         if (CollUtil.isNotEmpty(resourceList)) {
             uwdUserCacheService.setResourceList(userId,resourceList);
         }
@@ -234,7 +234,7 @@ public class UwdUserServiceImpl implements UwdUserService {
         }
         UwdUserExample example = new UwdUserExample();
         example.createCriteria().andUsernameEqualTo(updatePasswordParam.getUsername());
-        List<UwdUser> uwdUserList = uwdUserMapper.selectByExample(example);
+        List<UwdUser> uwdUserList = userMapper.selectByExample(example);
         if (CollUtil.isEmpty(uwdUserList)) {
             return -2;
         }
@@ -243,7 +243,7 @@ public class UwdUserServiceImpl implements UwdUserService {
             return -3;
         }
         uwdUser.setPassword(passwordEncoder.encode(updatePasswordParam.getNewPassword()));
-        uwdUserMapper.updateByPrimaryKey(uwdUser);
+        userMapper.updateByPrimaryKey(uwdUser);
         uwdUserCacheService.delUser(uwdUser.getId());
         return 1;
     }

@@ -44,12 +44,15 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
         // options请求直接放行
         if (req.getMethod().equals(HttpMethod.OPTIONS.toString())) {
             fi.getChain().doFilter(fi.getRequest(),fi.getResponse());
+            return;
         }
+        logger.info(req.getRequestURI());
         // 白名单直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String path : ignoreUrlsConfig.getUrls()) {
             if (pathMatcher.match(path,req.getRequestURI())) {
                 fi.getChain().doFilter(fi.getRequest(),fi.getResponse());
+                return;
             }
         }
         // 调用AccessDecisionManager中的decide方法进行鉴权

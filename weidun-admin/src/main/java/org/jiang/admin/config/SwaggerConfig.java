@@ -16,8 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig extends BaseSwaggerConfig {
     @Override
     public SwaggerProperties swaggerProperties() {
-        return swaggerProperties().builder()
-                .apiBasePackage("org.jiang.controller")
+        return SwaggerProperties.builder()
+                .apiBasePackage("org.jiang.admin.controller")
                 .title("威盾后台管理系统")
                 .description("威盾后台相关接口文档")
                 .contactName("jiang")

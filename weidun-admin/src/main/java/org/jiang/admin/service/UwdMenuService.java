@@ -31,7 +31,7 @@ public interface UwdMenuService {
     /**
      * 分页查询后台菜单
      */
-    List<UwdMenu> lsit(Long parentId,Integer pageSize,Integer pageNum);
+    List<UwdMenu> list(Long parentId,Integer pageSize,Integer pageNum);
     /**
      * 树形结构返回所有菜单列表
      */

@@ -50,8 +50,8 @@ jwt:
 aliyun:
   oss:
     endpoint: oss-cn-chengdu.aliyuncs.com
-    accessKeyId: LTAI4Fyozv7v34gpttovBvPV
-    accessKeySecret: 8uKHiJvWi5W0hrpEUQfe1MMTDlvohN
+    accessKeyId: xxxxxxxxx
+    accessKeySecret: xxxxxxx
     bucketName: wei-dun
     policy:
       expire: 300 # 签名有效期(s)

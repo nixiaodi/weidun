@@ -69,7 +69,7 @@ public class UwdMenuServiceImpl implements UwdMenuService {
     }
 
     @Override
-    public List<UwdMenu> lsit(Long parentId, Integer pageSize, Integer pageNum) {
+    public List<UwdMenu> list(Long parentId, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum,pageSize);
         UwdMenuExample example = new UwdMenuExample();
         example.setOrderByClause("sort desc");

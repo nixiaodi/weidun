@@ -39,6 +39,7 @@
         <druid.version>1.1.23</druid.version>
         <mybatis-generator.version>1.4.0</mybatis-generator.version>
         <mysql-connector.version>8.0.20</mysql-connector.version>
+        <knife4j.version>2.0.4</knife4j.version>
     </properties>
 
     <dependencies>
@@ -141,6 +142,11 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
             <!--SpringData工具包-->
             <dependency>
